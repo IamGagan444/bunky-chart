@@ -1,11 +1,11 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, ObjectId } from "mongoose";
 
-export interface Mesasage extends Document {
+export interface Message extends Document {
   content: string;
   createdAt: Date;
 }
 
-const messageSchema: Schema<Mesasage> = new Schema({
+const messageSchema: Schema<Message> = new Schema({
   content: {
     type: String,
     required: true,
@@ -17,16 +17,21 @@ const messageSchema: Schema<Mesasage> = new Schema({
   },
 });
 
-export interface User extends Document {
-  username: string;
-  password: string;
-  email: string;
-  verifyCode: string;
-  verifyCodeExpiration: Date;
-  isVerified: boolean;
-  messages: Mesasage[];
-  isAcceptingMessage: boolean;
-}
+export const MessageModel =
+  (mongoose.models?.Messages as mongoose.Model<Message>) ||
+  mongoose.model<Message>("Messages", messageSchema);
+
+  export interface User extends Document {
+    _id: ObjectId; 
+    username: string;
+    password: string;
+    email: string;
+    verifyCode: string;
+    verifyCodeExpiration: Date;
+    isVerified: boolean;
+    messages: Message[];
+    isAcceptingMessage: boolean;
+  }
 
 const userSchema: Schema<User> = new Schema({
   username: {
@@ -40,7 +45,6 @@ const userSchema: Schema<User> = new Schema({
     type: String,
     required: [true, "Password is required!"],
     minlength: 6,
-
     match: [
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
       "enter strong password",
@@ -63,13 +67,11 @@ const userSchema: Schema<User> = new Schema({
   },
   verifyCodeExpiration: {
     type: Date,
-
     required: [true, "VERIFY CODE expiration is required!"],
   },
   isVerified: {
     type: Boolean,
     default: false,
-    // required: [true, "vE is required!"],
   },
   messages: [messageSchema],
   isAcceptingMessage: {
@@ -78,10 +80,6 @@ const userSchema: Schema<User> = new Schema({
   },
 });
 
-export const userModel =
-  (mongoose.models.User as mongoose.Model<User>) ||
+export const UserModel =
+  (mongoose.models?.User as mongoose.Model<User>) ||
   mongoose.model<User>("User", userSchema);
-
-export const messageModel =
-  (mongoose.models.Messages as mongoose.Model<Mesasage>) ||
-  mongoose.model<Mesasage>("Messages", messageSchema);
