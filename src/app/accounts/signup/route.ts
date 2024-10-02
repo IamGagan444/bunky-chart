@@ -7,12 +7,14 @@ export async function POST(request: Request) {
   await dbConnect();
   const { username, email, password } = await request.json();
   console.log(username, email, password);
-  if(!username&&!email&&!password){
-    return Response.json({success:false,message:"all fields are required"},{status:400})
+  if (!username && !email && !password) {
+    return Response.json(
+      { success: false, message: "all fields are required" },
+      { status: 400 }
+    );
   }
 
   try {
-   
     const isUsernameVerifiedUserExist = await UserModel.findOne({
       username,
       isVerified: true,
@@ -27,7 +29,8 @@ export async function POST(request: Request) {
     const expiryDate = new Date(Date.now() + 15 * 60 * 1000);
 
     if (isEmailRegisterd) {
-      //email regisreed but username not verified yet
+
+     // email regisreed but username not verified yet
 
       if (isEmailRegisterd?.isVerified) {
         return {
@@ -84,6 +87,10 @@ export async function POST(request: Request) {
     }
   } catch (error) {
     console.error("error while registering", error);
-    return Response.json({ status: 500, message: "error while registering", success: false })
+    return Response.json({
+      status: 500,
+      message: "error while registering",
+      success: false,
+    });
   }
 }

@@ -57,7 +57,7 @@ const userSchema: Schema<User> = new Schema({
     trim: true,
     minlength: 3,
     match: [
-      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,
+      /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
       "please use a valid email address",
     ],
   },
