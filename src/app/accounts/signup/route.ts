@@ -29,8 +29,7 @@ export async function POST(request: Request) {
     const expiryDate = new Date(Date.now() + 15 * 60 * 1000);
 
     if (isEmailRegisterd) {
-
-     // email regisreed but username not verified yet
+      // email regisreed but username not verified yet
 
       if (isEmailRegisterd?.isVerified) {
         return {
@@ -85,6 +84,14 @@ export async function POST(request: Request) {
         { status: 201 }
       );
     }
+
+
+
+
+
+
+
+    
   } catch (error) {
     console.error("error while registering", error);
     return Response.json({
