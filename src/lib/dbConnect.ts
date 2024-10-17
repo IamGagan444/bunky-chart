@@ -2,17 +2,19 @@ import mongoose from "mongoose";
 
 type ConnectionObject = {
   isConnected?: number;
+  useNewUrlParser?:boolean
 };
 
 const connection: ConnectionObject = {};
 
 async function dbConnect() {
   if (connection.isConnected) {
-    return console.log("already connected");
+    return console.log(" database is already connected");
   }
   try {
     const connect = await mongoose.connect(`${process.env.MONGODB_URI}`, {
       dbName: "Bunky-chat",
+    serverSelectionTimeoutMS: 30000,
     });
 
     connection.isConnected = connect.connection.readyState;
