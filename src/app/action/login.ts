@@ -5,18 +5,21 @@ export const credentialLogin = async (email: string, password: string) => {
     const result = await signIn("credentials", {
       email,
       password,
-      redirect: false,  // Prevent automatic redirection
+      redirect: false, // Prevent automatic redirection
     });
-
+    console.log("result", result);
     if (result?.error) {
-      console.log("Login error:", result.error);
-      return result.error;
+    
+      return result.error
     }
 
-    console.log("Login successful", result);
-    return null; // No error
+   
+    return result;
   } catch (error) {
     console.error("Unexpected error:", error);
-    return "Unexpected error occurred";
+    return Response.json(
+      { message: "unexpected error in login.ts", success: false },
+      { status: 500 }
+    );
   }
 };

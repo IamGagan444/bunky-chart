@@ -202,7 +202,7 @@ export default function Signup() {
           <CardFooter>
             <p className="text-center w-full">
               Already have an account?{" "}
-              <Link href={"/login"} className=" text-sky-500">
+              <Link href={"/accounts/sign-in"} className=" text-sky-500">
                 Login
               </Link>
             </p>
