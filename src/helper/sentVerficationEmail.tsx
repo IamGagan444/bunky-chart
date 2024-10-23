@@ -17,6 +17,8 @@ export const sentVerificationEmail = async ({
   username,
   verificationCode,
 }: SentVerification): Promise<ApiResponse> => {
+  console.log("at sent verification email:",email, username, verificationCode);
+  console.log(process.env.RESEND_API_KEY);
   try {
     const { data, error } = await resend.emails.send({
       from: "onboarding@resend.dev",
@@ -24,7 +26,8 @@ export const sentVerificationEmail = async ({
       subject: "Bunky chat | verification code",
       react: EmailTemplate({ username, verificationCode }),
     });
-    console.log(data, error);
+    console.log("email sent to your",data);
+    console.log("error sending verification email", error);
     return {
       status: 200,
       message: "otp hase sent successfully",

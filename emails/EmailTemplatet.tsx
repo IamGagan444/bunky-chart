@@ -35,19 +35,21 @@ export default function EmailTemplate({
           <Section style={coverSection}>
             <Section style={imageSection}>
               <Img
-                src={`${baseUrl}/static/aws-logo.png`}
-                width="75"
-                height="45"
+                src={`https://i.ytimg.com/vi/HGbXtYcYKro/maxresdefault.jpg`}
+            
+                height="80"
                 alt="AWS's Logo"
+                className="w-full mx-auto block"
               />
             </Section>
             <Section style={upperSection}>
               <Heading style={h1}>Verify your email address {username} </Heading>
               <Text style={mainText}>
-                Thanks for starting the new AWS account creation process. We
+                Thanks for starting the new Bunky account creation process. We
                 want to make sure it's really you. Please enter the following
                 verification code when prompted. If you don&apos;t want to
-                create an account, you can ignore this message.
+                create an account
+                
               </Text>
               <Section style={verificationSection}>
                 <Text style={verifyText}>Verification code</Text>

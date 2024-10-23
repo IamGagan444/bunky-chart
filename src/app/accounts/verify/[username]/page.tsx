@@ -53,7 +53,7 @@ const Page = () => {
         color: "green",
         className: "bg-green-400 text-white",
       });
-      router.replace("/sign-in");
+      router.replace("/accounts/sign-in");
     } catch (error) {
       console.error("error in verify", error);
       const axiosError = error as AxiosError<ApiResponse>;

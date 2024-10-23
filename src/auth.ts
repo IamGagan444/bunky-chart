@@ -25,23 +25,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.log(credentials);
         const email = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
-        if (!email && !password) {
+        if (!email || !password) {
           throw new Error("Invalid credentials");
         }
         await dbConnect();
 
-        const user = await UserModel.findOne({ email: email });
+        const user = await UserModel.findOne({email});
+        console.log("login user ",user);
 
         if (!user) {
           throw new Error("User not found");
         }
-        if (user.isVerified) {
+        if (!user.isVerified) {
           throw new Error("User is not verified");
         }
         const isPasswordValid = await bcrypt.compare(
           password as string,
           user.password as string
         );
+        console.log('isPasswordValid',isPasswordValid);
 
         if (!isPasswordValid) {
           throw new Error("Invalid credentials");
@@ -51,7 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "api/authsignin",
+    signIn: "/accounts/sign-in",
   },
   callbacks: {
     jwt: async ({ token, user }) => {
@@ -71,6 +73,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.isAcceptingMessage = token.isAcceptingMessage as
           | boolean
           | undefined;
+          session.user.username = token.username as string | undefined;
       }
       return session;
     },

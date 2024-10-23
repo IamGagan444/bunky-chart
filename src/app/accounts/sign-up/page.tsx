@@ -81,7 +81,7 @@ export default function Signup() {
         className:"bg-green-400 text-white"
       });
 
-      router.replace(`/verify-code/${username}`);
+      router.replace(`/accounts/verify/${username}`);
       setIsSubmitting(false);
     } catch (error) {
       console.error("error in signup page", error);

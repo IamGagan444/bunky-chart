@@ -9,12 +9,13 @@ export async function GET() {
   const session = await auth();
   const user: User = session?.user as User;
 
-  if (!user && !session) {
+  if (!user) {
     return Response.json(
       { message: "unauthorized", succes: false },
       { status: 401 }
     );
   }
+ 
 
   const userId = new mongoose.Types.ObjectId(user?._id);
 
@@ -50,11 +51,11 @@ export async function GET() {
         { status: 404 }
       );
     }
-
+    console.log("get messages user",newUser );
     return Response.json(
       {
         message: "data get successfully",
-        messages: newUser[0].messages,
+        messages: newUser[0]?.messages||"",
         success: true,
       },
       { status: 200 }

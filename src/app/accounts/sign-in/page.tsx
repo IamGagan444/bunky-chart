@@ -49,13 +49,15 @@ const Page = () => {
     const password = data?.password;
 
     const err = await credentialLogin(email, password);
-
-    if (!err) {
+console.log("credential issuue check",err.ok)
+    if (err?.ok) {
       console.log("Login successful");
+      router.replace("/dashboard");
       toast({
         title: "Login successful",
         description: "You have successfully logged in",
       });
+      router.replace("/dashboard")
     } else {
       console.error("Login error:", err);
       toast({
